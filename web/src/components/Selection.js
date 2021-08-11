@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { AppContext } from 'src/context/AppContext'
-import { FcNext } from 'react-icons/fc'
+import { FcNext, FcPrevious } from 'react-icons/fc'
 
 import { useRef } from 'react'
 const Selection = (props) => {
@@ -9,18 +9,23 @@ const Selection = (props) => {
   const [selection, setSelection, listData, listOfObj] = useContext(AppContext)
 
   //pull out all keys in listOfObj
-  let objKeys = listOfObj.map((item) => {
+  const objKeys = listOfObj.map((item) => {
     return Object.keys(item)[0]
   })
 
+  //convert listOfObj to a plain obj so we can easily use key to access data
+  const plainObj = listOfObj.reduce((prev, cur) => {
+    return { ...prev, ...cur }
+  }, {})
+
   //handle new input in inputbox
   const onChange = (e) => {
-    let matchedListData = listData.filter((item) =>
+    const matchedListData = listData.filter((item) =>
       item.includes(e.target.value)
     )
 
     //keys that contain key phrase in input box
-    let matchedKeys = objKeys.filter((item) => item.includes(e.target.value))
+    const matchedKeys = objKeys.filter((item) => item.includes(e.target.value))
 
     setSelection((state) => {
       return {
@@ -34,11 +39,12 @@ const Selection = (props) => {
   const onHandleClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log(e.currentTarget.innerHTML)
+    const matchedKeyName = e.currentTarget.innerHTML
     setSelection((state) => {
       return {
         ...state,
-        extendedKey: 1,
+        extendedKey:
+          matchedKeyName === state.extendedKey ? null : matchedKeyName,
       }
     })
   }
@@ -78,20 +84,31 @@ const Selection = (props) => {
               >
                 <span
                   onClick={objKeys.includes(item) ? onHandleClick : () => {}}
-                  className="h-full cursor-pointer"
+                  className={`h-full ${
+                    objKeys.includes(item) ? 'cursor-pointer' : ''
+                  }`}
                 >
                   {item}
                 </span>
                 {/* if the matched phrase comes from  listOfObj, then add an arrow*/}
                 {objKeys.includes(item) && (
                   <span className="h-full flex flex-col justify-center">
-                    <FcNext className="h-4 w-4" />
+                    {selection.extendedKey === item ? (
+                      <FcPrevious className="h-4 w-4" />
+                    ) : (
+                      <FcNext className="h-4 w-4" />
+                    )}
                   </span>
                 )}
               </div>
             ))}
         </div>
-        <div className="selectionResultRightContainer border flex-grow"></div>
+        <div className="selectionResultRightContainer border flex-grow">
+          {selection.extendedKey &&
+            plainObj[selection.extendedKey].map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
+        </div>
       </div>
     </div>
   )
