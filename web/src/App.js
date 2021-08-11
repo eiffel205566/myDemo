@@ -12,6 +12,8 @@ import { listData, listOfObj } from 'src/data/myData'
 const App = () => {
   const [selection, setSelection] = useState({
     selected: null,
+    detailItems: null,
+    extendedKey: null,
   })
 
   return (
