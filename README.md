@@ -1,24 +1,16 @@
-# Redwood
+Notes:
 
-> **WARNING:** RedwoodJS software has not reached a stable version 1.0 and should not be considered suitable for production use. In the "make it work; make it right; make it fast" paradigm, Redwood is in the later stages of the "make it work" phase.
+#1: Usage of ContextAPI
+intialize a Context Object on Application level, wrap it around and pass down state and setState, call useContext at the component level to grab state/setState
 
-## Getting Started
-- [Tutorial](https://redwoodjs.com/tutorial/welcome-to-redwood): getting started and complete overview guide.
-- [Docs](https://redwoodjs.com/docs/introduction): using the Redwood Router, handling assets and files, list of command-line tools, and more.
-- [Redwood Community](https://community.redwoodjs.com): get help, share tips and tricks, and collaborate on everything about RedwoodJS.
 
-### Setup
+#2: 2 types of data defined in "data" folder under web/src
 
-We use Yarn as our package manager. To get the dependencies installed, just do this in the root directory:
+const listData = ['Door', 'Window', 'Chair', 'Desk', 'Shade']
+const listOfObj = [
+  { Fruit: ['Apple', 'Banana', 'Clementine', 'Mango'] },
+  { Vegi: ['Lettuce', 'Pepper', 'Carrot', 'Potato'] },
+  { Meat: ['Pork', 'Beef', 'Lamb', 'Fish'] },
+]
 
-```terminal
-yarn install
-```
-
-### Fire it up
-
-```terminal
-yarn redwood dev
-```
-
-Your browser should open automatically to `http://localhost:8910` to see the web app. Lambda functions run on `http://localhost:8911` and are also proxied to `http://localhost:8910/.redwood/functions/*`. 
+#3: typing in the input box will try to match either an item in listData or key in listOfObj, if matched key from listOfObj, then display an arrow to indicate there is more data (the value of each item in listOfObj). Click/toggle on the arrow will display the "value" data in the right section
