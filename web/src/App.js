@@ -16,8 +16,18 @@ const App = () => {
     extendedKey: null,
   })
 
+  const draw = (ctx, frameCount) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.fillStyle = '#000000'
+    ctx.beginPath()
+    ctx.arc(50, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI)
+    ctx.fill()
+  }
+
   return (
-    <AppContext.Provider value={[selection, setSelection, listData, listOfObj]}>
+    <AppContext.Provider
+      value={[selection, setSelection, listData, listOfObj, draw]}
+    >
       <FatalErrorBoundary page={FatalErrorPage}>
         <RedwoodProvider>
           <RedwoodApolloProvider>
