@@ -1,4 +1,4 @@
-import useCanvas from 'src/pages/TestPage/useCanvas'
+import { useCanvas } from 'src/pages/TestPage/useCanvas'
 
 const Canvas = (props) => {
   // const [, , , , draw] = useContext(AppContext)

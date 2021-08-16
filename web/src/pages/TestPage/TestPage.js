@@ -21,7 +21,7 @@ export const TestPage = () => {
   return (
     <>
       <div>test</div>
-      <div className="h-96 w-screen bg-gray-100">
+      <div className="h-96 w-screen bg-gray-500">
         {/* <Canvas draw={draw} /> */}
         {/* <Canvas draw={drawDots} /> */}
         <Canvas className="h-full w-full" />

@@ -3,7 +3,7 @@ import { Star } from './Dot'
 
 const MAGIC_NUM = 9.549296585513721
 
-const useCanvas = (draw) => {
+export const useCanvas = () => {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -20,7 +20,8 @@ const useCanvas = (draw) => {
     let positionX = 100
     let lengthX = 100
 
-    const star = new Star(context)
+    const star1 = new Star(context)
+    const star2 = new Star(context)
 
     const render = () => {
       // * disposition
@@ -54,34 +55,41 @@ const useCanvas = (draw) => {
       // context.fillRect(100, 100, 100, 100)
       // window.requestAnimationFrame(render)
       // * scale positionX move 1/2 of lengthX
-      // if (lengthX === 0) {
-      //   sign = 1 //length is 0, flip sign to start increment length
-      // }
-      // if (lengthX === 100) {
-      //   sign = 0 //length is max, flip sign to start decrement length
-      // }
-      // if (sign) {
-      //   lengthX += 2
-      //   positionX -= 1
-      // } else {
-      //   lengthX -= 2
-      //   positionX += 1
-      // }
-      // context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+      if (lengthX === 0) {
+        sign = 1 //length is 0, flip sign to start increment length
+      }
+      if (lengthX === 100) {
+        sign = 0 //length is max, flip sign to start decrement length
+      }
+      if (sign) {
+        lengthX += 2
+        positionX -= 1
+      } else {
+        lengthX -= 2
+        positionX += 1
+      }
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height)
       // context.fillStyle = 'transparent'
       // context.drawImage(pic, positionX, 100, lengthX, 100)
       // context.fillRect(positionX, 100, lengthX, 100)
+      // context.fillStyle = 'red'
+      // context.fillRect(300, 300, 10, 10)
       // window.requestAnimationFrame(render)
       // // * draw start
-      star.draw()
+      // star1.draw()
+      // star2.draw()
+      context.fillRect(positionX + 100, 200, lengthX, 100)
+      context.fillRect(positionX, 100, lengthX, 100)
       // context.fillRect(330, 150, 100, 100)
+      // context.fillRect(100, 100, 100, 100)
+      window.requestAnimationFrame(render)
     }
     render()
 
     return () => {
       window.cancelAnimationFrame(animationFrameId)
     }
-  }, [draw])
+  }, [])
 
   return canvasRef
 }
